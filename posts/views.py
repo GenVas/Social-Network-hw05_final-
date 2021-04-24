@@ -58,9 +58,13 @@ def profile(request, username):
     following = (request.user.is_authenticated
                  and Follow.objects.filter(user=request.user,
                                            author=author).exists())
+    followers = Follow.objects.filter(author=author)
+    followings = Follow.objects.filter(user=author)
     return render(request, 'profile.html', {'author': author,
                                             'page': page,
-                                            'following': following
+                                            'following': following,
+                                            'followers': followers,
+                                            'followings': followings
                                             }
                   )
 
