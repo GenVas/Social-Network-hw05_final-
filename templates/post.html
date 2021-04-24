@@ -1,0 +1,10 @@
+<!-- post.html -->
+{% extends "base.html" %}
+{% block title %}Страница поста{% endblock %}
+{% block header %}Страница поста{% endblock %}
+{% block content %}
+{% load thumbnail %}
+
+{% include "post_item.html" with post=post %}
+
+{% endblock %}

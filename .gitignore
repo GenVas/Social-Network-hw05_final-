@@ -144,7 +144,7 @@ dmypy.json
 .history/
 
 .mypy_cache
-
+tmp*
 # папки со статикой и медиа
 static/
 posts/static/
