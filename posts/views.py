@@ -110,12 +110,11 @@ def add_comment(request, username, post_id):
     form = CommentForm(request.POST or None)
     if not form.is_valid():
         comments = Comment.objects.filter(post_id=post_id)
-        return render(request,
-                      "comments.html", {"form": form,
-                                        "comments": comments
-                                        }
-                      
-                      )
+        return render(
+            request, "comments.html", {"form": form,
+                                       "comments": comments
+                                       }
+        )
     comment = form.save(commit=False)
     comment.author = request.user
     comment.post = post
