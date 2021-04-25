@@ -6,6 +6,7 @@ from posts.models import Group, Post, User
 HOME_PAGE, NEW_POST = reverse("index"), reverse("new_post")
 URL_404 = "404/"
 
+
 class StaticURLTests(TestCase):
     def setUp(self):
         self.group = Group.objects.create(title="Тест-название",
@@ -32,6 +33,8 @@ class StaticURLTests(TestCase):
                                                self.post_id])
         self.edit_page = reverse("post_edit",
                                  args=[self.username, self.post.id, ])
+        self.comment_page = reverse('add_comment', args=[self.username,
+                                                         self.post.id, ])
 
     # 1. Проверка запросов к страницам
     def test_url_exists(self):
@@ -48,6 +51,7 @@ class StaticURLTests(TestCase):
             [NEW_POST, self.authorized_client, 200],
             [self.edit_page, self.guest_client, 302],
             [self.edit_page, self.authorized_client, 200],
+            [self.comment_page, self.authorized_client, 200],
         ]
 
         for url, client, code in url_names:
@@ -72,6 +76,7 @@ class StaticURLTests(TestCase):
             ["profile.html", profile_page, self.guest_client],
             ["new.html", NEW_POST, self.authorized_client],
             ["new.html", self.edit_page, self.authorized_client],
+            ["comments.html", self.comment_page, self.authorized_client]
         ]
 
         for template, url, client in url_names:
@@ -80,7 +85,7 @@ class StaticURLTests(TestCase):
 
     # Проверка редиректов
     def test_redirect(self):
-        """Проверка редиректов для страниц."""
+        """Проверка редиректов для страниц"""
 
         url_names = [
             [NEW_POST, self.guest_client, (reverse("login") + "?next="

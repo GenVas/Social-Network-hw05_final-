@@ -24,6 +24,10 @@ class RoutesTest(TestCase):
             reverse('post_edit', args=[post.author.username,
                                        post.id]): f'/{user.username}/'
                                                   f'{post.id}/edit/',
+            reverse('add_comment',
+                    args=[user.username,
+                          post.id, ]): f'/{user.username}/'
+                                       f'{post.id}/comment/',
         }
         for page, url in test_urls.items():
             self.assertEqual(page, url)

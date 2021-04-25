@@ -24,26 +24,25 @@
   
       <!-- Отображение ссылки на комментарии -->
       <div class="d-flex justify-content-between align-items-center">
-        <div class="btn-group">
+        <div class="btn-toolbar">
+          <!-- Количество комментов к посту -->
           {% if post.comments.exists %}
-          <div>
-            Комментариев: {{ post.comments.count }}
-          </div>
+            Комментариев: {{ post.comments.count }} &nbsp;
           {% endif %}
-          <a class="btn btn-sm btn-primary" href="{% url 'add_comment' post.author.username post.id %}" role="button">
+          <a class="btn btn-sm btn-primary mr-2 mb-2" href="{% url 'add_comment' post.author.username post.id %}" role="button">
              Добавить комментарий
           </a>
           <!-- Ссылка на редактирование поста для автора -->
           {% if user == post.author %}
-          <a class="btn btn-sm btn-info" href="{% url 'post_edit' post.author.username post.id %}" role="button">
+          <a class="btn btn-sm btn-info mr-2 mb-2" href="{% url 'post_edit' post.author.username post.id %}" role="button">
             Редактировать
           </a>
           {% endif %}
-        </div>
           <!-- Ссылка на страницу поста -->
-          <a class="btn btn-sm btn-info" href="{% url 'post' post.author post.id %}" role="button">
+          <a class="btn btn-sm btn-info mr-2 mb-2" href="{% url 'post' post.author post.id %}" role="button">
             Просмотреть запись
           </a>
+        </div>
         <!-- Дата публикации поста -->
         <small class="text-muted">{{ post.pub_date }}</small>
       </div>

@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.cache import cache_page
 
-from .forms import PostForm, CommentForm
+from .forms import CommentForm, PostForm
 from .models import Comment, Follow, Group, Post, User
 from .settings import POSTS_ON_PAGE, POSTS_ON_PROFILE_PAGE
 
@@ -168,7 +167,3 @@ def profile_unfollow(request, username):
     if request.user != author:
         Follow.objects.get(user=request.user, author=author).delete()
     return redirect('profile', username=username)
-
-    # Во вью создаёшь объект Follow с парой автор-юзер. Предварительно проверить,
-    # что автор не юзер, что такого объекта нет ещё
-    # В unfollow удаляешь объект. В обоих случаях потом редирект на страницу автора, как то так)

@@ -26,8 +26,7 @@ class PostPagesTests(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # Модуль shutil - библиотека Python с прекрасными инструментами
-        # для управления файлами и директориями:
+        # Модуль shutil:
         # создание, удаление, копирование, перемещение, изменение папок|файлов
         # Метод shutil.rmtree удаляет директорию и всё её содержимое
         shutil.rmtree(settings.MEDIA_ROOT, ignore_errors=True)
@@ -76,7 +75,7 @@ class PostPagesTests(TestCase):
                                                     self.post.id], )
 
     # Проверяем контекст
-    def test_main_group_pages_shows_correct_context(self):
+    def test_main_group_profile_pages_shows_correct_context(self):
         """Страница index, group, profile сформированы
         с правильным контекстом."""
         urls = [HOME_PAGE, self.group_page, self.profile_page, ]
@@ -91,7 +90,7 @@ class PostPagesTests(TestCase):
                 self.assertEqual(self.group.title, post.group.title)
                 self.assertEqual(self.post.image, post.image)
 
-    def test_slug_pages_shows_correct_context(self):
+    def test_post_page_shows_correct_context(self):
         """Страница post сформирована с правильным контекстом."""
         url = self.post_page
         response = self.guest_client.get(url)
