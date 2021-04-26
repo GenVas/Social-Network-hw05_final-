@@ -4,18 +4,18 @@
 {% block content %}
 
 {% cache 30 index_page page %} 
-  {% include "menu.html" with index=True %}
+  {% include "includes/menu.html" with index=True %}
     <div class="container">
         <h1> Последние записи пользователя </h1>
         <!-- Вывод ленты записей -->
             {% for post in page %}
-                {% include "post_item.html" with post=post %}
+                {% include "includes/post_item.html" with post=post %}
             {% endfor %} 
     </div>
 {% endcache %}  
     <!-- Вывод паджинатора -->
     {% if page.has_other_pages %}
-        {% include "paginator.html" with items=page paginator=paginator%}
+        {% include "includes/paginator.html" with items=page paginator=paginator%}
     {% endif %}
 
 {% endblock %}
