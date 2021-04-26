@@ -7,7 +7,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from posts.models import Group, Post, User
-from posts.settings import POSTS_ON_PAGE
+from yatube.settings import POSTS_ON_PAGE
 
 HOME_PAGE, NEW_POST = reverse('index'), reverse('new_post')
 

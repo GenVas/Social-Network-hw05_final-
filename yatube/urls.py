@@ -23,21 +23,13 @@ handler404 = "posts.views.page_not_found"  # noqa
 handler500 = "posts.views.server_error"  # noqa
 
 urlpatterns = [
-    #  регистрация и авторизация
     path("auth/", include("users.urls")),
-    #  если нужного шаблона для /auth не нашлось в файле users.urls —
-    #  ищем совпадения в файле django.contrib.auth.urls
     path("about/", include("about.urls")),
     path("auth/", include("django.contrib.auth.urls")),
-    #  раздел администратора
     path("admin/", admin.site.urls),
-    #  обработчик для главной страницы ищем в urls.py приложения posts
     path("", include("posts.urls")),
 ]
 
-# Этот код будет работать, когда сайт в режиме отладки.
-# Он позволяет обращаться файлам в директории, указанной в
-# MEDIA_ROOT по имени, через префикс MEDIA_URL.
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

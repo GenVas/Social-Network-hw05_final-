@@ -139,18 +139,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index"
 
-# Параметр LOGOUT_REDIRECT_URL заменяет адрес страницы,
-# указанный в файле logged_out.html. Уберите комментарий
-# с этой строки, если хотите перенаправлять пользователя
-# на главную страницу после того, как он разлогинится.
-
-# LOGOUT_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "index"
 
 # Email
-
-#  подключаем движок filebased.EmailBackend
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# указываем директорию, в которую будут складываться файлы писем
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Подключение бэкенда кеширования
@@ -159,3 +151,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+# константа для количества постов на странице для Paginator
+POSTS_ON_PAGE = 10
+POSTS_ON_PROFILE_PAGE = 4

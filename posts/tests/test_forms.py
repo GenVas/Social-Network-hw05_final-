@@ -266,12 +266,8 @@ class PostPagesTests(TestCase):
                                          author=self.user)
         self.assertEqual(Follow.objects.count(), follows_before + 1)
         self.assertTrue(followed.exists())
-
-        # проверка отображения списка постов на нужной странице follow
         response = self.authorized_client_2.get(FOLLOW_INDEX_PAGE)
         self.assertEqual(len(response.context['page']), follows_before + 1)
-        # провека отсутствия списка постов на странице неподписанного
-        # пользователя
         response = self.authorized_client.get(FOLLOW_INDEX_PAGE)
         self.assertEqual(len(response.context['page']), follows_before)
 
@@ -284,13 +280,12 @@ class PostPagesTests(TestCase):
                      'author': self.username}
         self.authorized_client_2.post(
             follow_page, data=form_data, follow=True)
-        followed = Follow.objects.filter(user=self.user_2,
-                                         author=self.user)
-        self.assertTrue(followed.exists())
+        following_done = Follow.objects.count()
         self.authorized_client_2.post(
             unfollow_page, data=form_data, follow=True)
         unfollowed = Follow.objects.filter(user=self.user_2,
                                            author=self.user)
+        self.assertEqual(Follow.objects.count(), following_done - 1)
         self.assertFalse(unfollowed.exists())
 
 # Тестирование кэша

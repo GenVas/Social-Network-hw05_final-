@@ -1,20 +1,20 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import gettext_lazy as _
+
+from yatube.settings import POSTS_ON_PAGE, POSTS_ON_PROFILE_PAGE
 
 from .forms import CommentForm, PostForm
 from .models import Comment, Follow, Group, Post, User
-from .settings import POSTS_ON_PAGE, POSTS_ON_PROFILE_PAGE
 
-NEW_POST_SUBMIT_TITLE = _("Добавить запись")
-NEW_POST_SUBMIT_BUTTON = _("Добавить")
-EDIT_POST_SUBMIT_TITLE = _("Изменить запись")
-EDIT_POST_SUBMIT_BUTTON = _("Сохранить")
+NEW_POST_SUBMIT_TITLE = "Добавить запись"
+NEW_POST_SUBMIT_BUTTON = "Добавить"
+EDIT_POST_SUBMIT_TITLE = "Изменить запись"
+EDIT_POST_SUBMIT_BUTTON = "Сохранить"
 
 
 def index(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.all().select_related('group')
     paginator = Paginator(post_list, POSTS_ON_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -50,15 +50,16 @@ def new_post(request):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(author=author)
+    # posts = Post.objects.filter(author=author)
+    posts = author.posts.all()
     paginator = Paginator(posts, POSTS_ON_PROFILE_PAGE)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     following = (request.user.is_authenticated
                  and Follow.objects.filter(user=request.user,
                                            author=author).exists())
-    followers = Follow.objects.filter(author=author)
-    followings = Follow.objects.filter(user=author)
+    followers = author.following.all()
+    followings = author.follower.all()
     return render(request, 'profile.html', {'author': author,
                                             'page': page,
                                             'following': following,
@@ -122,8 +123,6 @@ def add_comment(request, username, post_id):
 
 
 def page_not_found(request, exception):
-    # Переменная exception содержит отладочную информацию,
-    # выводить её в шаблон пользователской страницы 404 мы не станем
     return render(
         request,
         "misc/404.html",
@@ -149,9 +148,6 @@ def follow_index(request):
          }
     )
 
-    # информация о текущем пользователе доступна в переменной request.user
-    # ...
-
 
 @login_required
 def profile_follow(request, username):
@@ -165,5 +161,6 @@ def profile_follow(request, username):
 def profile_unfollow(request, username):
     author = get_object_or_404(User, username=username)
     if request.user != author:
-        Follow.objects.get(user=request.user, author=author).delete()
+        get_object_or_404(Follow, user=request.user,
+                          author=author).delete()
     return redirect('profile', username=username)

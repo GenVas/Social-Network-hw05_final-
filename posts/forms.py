@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 
 from .models import Comment, Group, Post
 
@@ -10,8 +9,8 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('text', 'group', 'image')
         labels = {
-            'group': _('Вы можете выбрать группу'),
-            'text': _('Напишите сообщение')
+            'group': 'Вы можете выбрать группу',
+            'text': 'Напишите сообщение'
         }
         help_texts = {
             'group': 'Поле не является обязательным',
@@ -39,7 +38,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text',)
         labels = {
-            'text': _('Напишите комментарий')
+            'text': 'Напишите комментарий'
         }
         help_texts = {
             'text': 'Придумайте комментарий для поста. '
