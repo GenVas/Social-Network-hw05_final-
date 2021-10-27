@@ -145,9 +145,14 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
 # Email
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
+EMAIL_HOST = 'smtp.eu.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@geedee.ga'
+EMAIL_HOST_PASSWORD = '298e6f2167f84c5d3a5141abe55378ab-20ebde82-16602108'
+EMAIL_USE_TLS = True
 # Подключение бэкенда кеширования
 CACHES = {
     'default': {
