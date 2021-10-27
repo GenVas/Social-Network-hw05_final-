@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+EMAIL_USER = os.getenv("MAILGUN_USERNAME")
+EMAIL_PASSWORD = os.getenv("MAILGUN_PASSWORD")
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -150,8 +157,8 @@ LOGOUT_REDIRECT_URL = "index"
 
 EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@geedee.ga'
-EMAIL_HOST_PASSWORD = '298e6f2167f84c5d3a5141abe55378ab-20ebde82-16602108'
+EMAIL_HOST_USER = EMAIL_USER
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 EMAIL_USE_TLS = True
 # Подключение бэкенда кеширования
 CACHES = {
