@@ -16,8 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-EMAIL_USER = os.getenv("MAILGUN_USERNAME")
-EMAIL_PASSWORD = os.getenv("MAILGUN_PASSWORD")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,10 +25,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_&v%6324x4j5e2_%3-*)&gl)t3elje%*$-0+^6l5k=$i#x0vz^'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = str(os.getenv('DEBUG'))
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -157,9 +155,10 @@ LOGOUT_REDIRECT_URL = "index"
 
 EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = EMAIL_USER
-EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_HOST_USER = os.getenv("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.getenv("MAILGUN_PASSWORD")
 EMAIL_USE_TLS = True
+
 # Подключение бэкенда кеширования
 CACHES = {
     'default': {
