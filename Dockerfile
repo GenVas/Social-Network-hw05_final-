@@ -15,5 +15,3 @@ COPY . /code
 
 # при старте контейнера выполнить runserver 
 CMD python /code/manage.py runserver 0:8000
-
-LABEL author='vasilievga@yandex.ru' version=1 broken_keyboards=0
