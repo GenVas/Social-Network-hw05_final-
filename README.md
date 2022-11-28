@@ -2,4 +2,8 @@
 
 The Project sets the social network with backend and html-pages.
 
-The network allows authorization,creation of new posts, commenting posts
+The network allows authorization,creation of new posts, commenting posts.
+
+The Project is covered with TestCase testing.
+
+
